@@ -6,11 +6,17 @@ import App from "@/App.vue"
 import Login from "@/pages/Login"
 
 
+// 导入vant-UI组件
+import Vant from "vant"
+
+
 // 路由：1、导入路由构造函数
 import VueRouter from "vue-router"
 
 // 在.vue 文件中要使用router-link或者router-view，需要注册一下插件
 Vue.use(VueRouter);
+
+Vue.use(Vant);
 
 // 路由：2、创建路由配置
 const routes = [{

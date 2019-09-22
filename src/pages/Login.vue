@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <!-- 关闭按钮 -->
     <div class="close">
       <span class="iconfont iconicon-test"></span>
@@ -11,21 +11,37 @@
     </div>
 
     <!-- 用户名密码输入框 -->
-    <div>
-      <AuthInput placeholder="手机号码" v-model="form.username"></AuthInput>
+    <div class="inputs">
+      <!-- 输入框组件 -->
+      <AuthInput
+        placeholder="手机号码"
+        :value="form.username"
+        @input="handleUsername"
+        :rule="/^1[0-9]{4,10}$/"
+        err_message="手机号码格式不正确"
+      ></AuthInput>
     </div>
     <div>
-      <input type="password" placeholder="请输入密码" />
+      <AuthInput
+        placeholder="密码"
+        v-model="form.password"
+        :rule="/^[0-9a-zA-Z]{3,12}$/"
+        err_message="密码格式不正确"
+        type="password"
+      ></AuthInput>
     </div>
-
-    <!-- 登录按钮 -->
-    <button>登录</button>
+    <div class="button">
+      <!-- 登录按钮 -->
+      <!-- <button @click="handleSubmit">登录</button> -->
+      <AuthButton text="登录" @click="handleSubmit"></AuthButton>
+    </div>
   </div>
 </template>
 
 <script >
 // 导入输入框组件
-import AuthInput from "@/components/authInput";
+import AuthInput from "@/components/AuthInput";
+import AuthButton from "@/components/AuthButton";
 
 export default {
   data() {
@@ -33,15 +49,26 @@ export default {
       // 发送给后台的数据
       form: {
         username: "",
-        password: "",
+        password: ""
       }
     };
   },
+  // 注册组件
   components: {
-    AuthInput
+    AuthInput,
+    AuthButton
   },
-  methods:{
-    handle
+  methods: {
+    // 传递给输入框组件，用于获取用户名
+    handleUser(value) {
+      this.form.username = value;
+    },
+    handleSubmit() {
+      // console.log(this.from);
+      axios({
+        url
+      });
+    }
   }
 };
 </script>
@@ -52,8 +79,13 @@ export default {
 // scoped 作用域样式
 // lang 声明样式
 
+.box {
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
 .close {
-  padding: 20px;
+  padding: 20px 0;
 
   span {
     font-size: 27/360 * 100vw;
@@ -68,6 +100,14 @@ export default {
     font-size: 126/360 * 100vw;
     color: #d81e06;
   }
+}
+.inputs {
+  input {
+    margin-bottom: 20px;
+  }
+}
+.button {
+  margin-top: 30px;
 }
 
 /* 组件样式 */
