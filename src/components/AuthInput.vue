@@ -24,9 +24,9 @@ export default {
   methods: {
     // 每次输入框输入值时候都会触发
     handleInput(event) {
-      // this.$emit("input", event.target.value);
+      // this.$emit("input", event.target.value); 
       var { value } = event.target;
-
+      // this.value = value;
       // 触发父组件的input事件，返回输入框的值
       this.$emit("input", value);
 
@@ -43,7 +43,8 @@ export default {
     // 输入框失去焦点时候触发
     handleChange() {
       if (this.err_message && this.status === "error") {
-        alert(this.err_message);
+        // alert(this.err_message);
+        this.$toast.fail(this.err_message);
       }
     }
   }
