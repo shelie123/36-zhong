@@ -1,30 +1,42 @@
 <template>
-  <div class="colorRed">
-    <!-- 这是一个单文件内容， -->
-    {{message}}
-    <router-link to="/login">登录</router-link>
+  <div>
+    <!-- 组件占位符 -->
     <router-view></router-view>
-    <div class="box"></div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      message: "heollo vue"
-    };
+    return {};
   }
 };
 </script>
 
 <style>
-.colorRed {
-  color: red;
+/* 公共样式*/
+
+@import url(http://at.alicdn.com/t/font_1426139_h6vn3jbl5q.css);
+
+* {
+  margin: 0;
+  padding: 0;
 }
-.box {
-  width: 5vw;
-  height: 5vw;
-  background: gray;
+
+a {
+  color: inherit;
+}
+a:hover {
+  text-decoration: none;
+}
+ul,
+li,
+ol {
+  list-style: none;
+}
+
+i,
+em {
+  font-style: normal;
 }
 </style>

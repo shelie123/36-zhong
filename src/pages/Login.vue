@@ -1,36 +1,74 @@
 <template>
   <div>
-    登陆页
-    <!-- <p>第一个单文件组件</p> -->
-    <div class="box">
-      <!-- <img src="../images/logo.png" alt /> -->
-      <p>
-        <input type="text" placeholder="请输入用户名" />
-      </p>
-      <p>
-        <input type="password" placeholder="请输入密码"/>
-      </p>
+    <!-- 关闭按钮 -->
+    <div class="close">
+      <span class="iconfont iconicon-test"></span>
     </div>
+
+    <!-- logo -->
+    <div class="logo">
+      <span class="iconfont iconnew"></span>
+    </div>
+
+    <!-- 用户名密码输入框 -->
+    <div>
+      <AuthInput placeholder="手机号码" v-model="form.username"></AuthInput>
+    </div>
+    <div>
+      <input type="password" placeholder="请输入密码" />
+    </div>
+
+    <!-- 登录按钮 -->
+    <button>登录</button>
   </div>
 </template>
 
-<script>
-export default {};
+<script >
+// 导入输入框组件
+import AuthInput from "@/components/authInput";
+
+export default {
+  data() {
+    return {
+      // 发送给后台的数据
+      form: {
+        username: "",
+        password: "",
+      }
+    };
+  },
+  components: {
+    AuthInput
+  },
+  methods:{
+    handle
+  }
+};
 </script>
 
-<style>
+
+
+<style scoped lang="less">
+// scoped 作用域样式
+// lang 声明样式
+
+.close {
+  padding: 20px;
+
+  span {
+    font-size: 27/360 * 100vw;
+  }
+}
+.logo {
+  display: flex;
+  justify-content: center;
+
+  span {
+    display: block;
+    font-size: 126/360 * 100vw;
+    color: #d81e06;
+  }
+}
+
 /* 组件样式 */
-html {
-  font-size: 10vw;
-}
-
-body {
-  font-size: 16px;
-}
-
-.box {
-  width: 5rem;
-  height: 5rem;
-  /* background: gray; */
-}
 </style>
