@@ -20,25 +20,26 @@
         :rule="/^1[0-9]{4,10}$/"
         err_message="手机号码格式不正确"
       ></AuthInput>
+      <div>
+        <AuthInput
+          placeholder="昵称"
+          v-model="form.nickname"
+          :rule="/^[0-9a-zA-Z\u4e00-\u9fa5]{2,6}$/"
+          err_message="昵称格式不正确"
+        ></AuthInput>
+      </div>
+      <div>
+        <AuthInput
+          placeholder="密码"
+          v-model="form.password"
+          :rule="/^[0-9a-zA-Z]{3,12}$/"
+          err_message="密码格式不正确"
+          type="password"
+        ></AuthInput>
+      </div>
     </div>
     <!-- 昵称 -->
-    <div>
-      <AuthInput
-        placeholder="昵称"
-        v-model="form.nickname"
-        :rule="/^[0-9a-zA-Z\u4e00-\u9fa5]{2,6}$/"
-        err_message="昵称格式不正确"
-      ></AuthInput>
-    </div>
-    <div>
-      <AuthInput
-        placeholder="密码"
-        v-model="form.password"
-        :rule="/^[0-9a-zA-Z]{3,12}$/"
-        err_message="密码格式不正确"
-        type="password"
-      ></AuthInput>
-    </div>
+
     <p class="tips">
       已有账号？
       <router-link to="/login">去登录</router-link>
@@ -132,7 +133,7 @@ export default {
 }
 .inputs {
   input {
-    // margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 }
 .button {
