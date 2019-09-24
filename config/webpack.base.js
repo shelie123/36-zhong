@@ -5,6 +5,8 @@ const {
     CleanWebpackPlugin
 } = require('clean-webpack-plugin');
 
+const CopyPlugin = require("copy-webpack-plugin");
+
 // 引入vue-loader插件
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
@@ -40,7 +42,7 @@ module.exports = {
     // 模块加载器
     module: {
         rules: [{
-                // 处理文件类型
+                // 处理文件类型,匹配 .css结尾的文件
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "vue-style-loader",
@@ -48,6 +50,7 @@ module.exports = {
                 })
             },
             {
+                // 处理less文件类型，匹配 .less结尾的文件
                 test: /\.less$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "vue-style-loader",
@@ -55,16 +58,18 @@ module.exports = {
                 })
             },
             {
+                // 匹配图片文件
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [{
-                    loader: "file-loader",
+                    loader: "file-loader", //处理图片文件返回链接
                     options: {
-                        publicPath: "./images/",
-                        outputPath: "images"
+                        publicPath: "./images/", //引入图片时会在路径前面加上该选项
+                        outputPath: "images" //输出到dist下的images目录
                     }
                 }]
             },
             {
+                // 匹配Vue的单文件组件
                 test: /\.vue$/,
                 use: ['vue-loader']
             },
@@ -85,5 +90,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "public/index.html"
         }),
+
+        // 把static复制到dist下的static
+        new CopyPlugin([{
+            from: 'static',
+            to: 'static'
+        }])
     ]
 }

@@ -1,15 +1,19 @@
 import Vue from "vue"
 
 // + 导入App.vue
-import App from "@/App.vue"
+import App from "@/App.vue";
 
-import Login from "@/pages/Login"
+import Login from "@/pages/Login";
 
 import Register from "@/pages/Register";
 
+import Personal from "@/pages/Personal"
+
 
 // 导入vant-UI组件
-import Vant, {
+import Vant from "vant";
+
+import {
     Toast
 } from "vant"
 
@@ -27,7 +31,7 @@ Vue.use(Vant);
 // 把axios挂载到原型
 // 基准路径，以后每次请求都会自动在前面加上该路径
 Vue.prototype.$axios = axios; // this.$axios
-axios.defaults.baseURL = "http://127.0.0.1:3000";
+axios.defaults.baseURL = "http://localhost:3000";
 
 // 路由：2、创建路由配置
 const routes = [{
@@ -37,9 +41,14 @@ const routes = [{
     {
         path: "/register",
         component: Register
-    }, {
-        path: "/",
-        component: Login
+    },
+    // {
+    //     path: "/",
+    //     component: Login
+    // },
+    {
+        path: "/personal",
+        component: Personal
     }
 ]
 
@@ -48,17 +57,47 @@ const router = new VueRouter({
     routes
 })
 
+// 路由守卫
+router.beforeEach((to, from, next) => {
+    // 是否有token
+    const hasToken = localStorage.getItem("token");
+
+    // 是否是个人中心
+    if (to.path === '/personal') {
+        // 判断本地是否有token
+        if (hasToken) {
+            return next();
+        } else {
+            // 没有token则跳转到登录页
+            return next("/login")
+        }
+    } else {
+        // 所有人都可以访问到的页面正常浏览
+        next();
+    }
+
+})
+
 // axios的统一拦截器，拦截响应
+//固定的声明
 axios.interceptors.response.use(res => {
     var {
         message,
         statusCode
     } = res.data;
-    if (statusCode === 401) {
+    if (message && statusCode === 401) {
         Toast.fail(message)
+    }
+    // token过期了，或者token无效，一般引起的原因可能token被清空，密码修改了
+    if (message === "用户信息验证失败") {
+        // 跳转到登录页
+        router.push("/login");
     }
     // 必须要返回res
     return res;
+}, function (err) {
+    // 请求后台失败时候的错误
+    return Toast.fail("网络错误")
 })
 
 
@@ -73,7 +112,9 @@ new Vue({
 
     // 路由：4、挂载到根实例
     router,
+    // 指定一个组件渲染根实例，这个组件可以成为最底层的组件
     render(createElement) {
+        // render函数使用固定的写法，只有APP是可变
         return createElement(App)
     }
 })

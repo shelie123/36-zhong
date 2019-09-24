@@ -74,17 +74,21 @@ export default {
     handleSubmit() {
       // console.log(this.from);
       this.$axios({
-        url: "http://127.0.0.1:3000/login",
+        url: "/login",
         method: "POST", //method 相当于type
         data: this.form
       }).then(res => {
         // then 的回调函数相当于success
         // console.log(res);
-        var { message } = res.data;
+        var { message, data } = res.data;
 
         if (message === "登录成功") {
+          // 把data中的token和用户id保存到本地
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user_id", data.user.id);
+
           // 跳转到首页
-          this.$router.push("/");
+          this.$router.push("/personal");
         }
       });
     }
