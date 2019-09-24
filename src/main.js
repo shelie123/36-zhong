@@ -42,10 +42,10 @@ const routes = [{
         path: "/register",
         component: Register
     },
-    // {
-    //     path: "/",
-    //     component: Login
-    // },
+    {
+        path: "/",
+        component: Login
+    },
     {
         path: "/personal",
         component: Personal
