@@ -9,7 +9,9 @@ import Register from "@/pages/Register";
 
 
 // 导入vant-UI组件
-import Vant from "vant"
+import Vant, {
+    Toast
+} from "vant"
 
 // 导入axios
 import axios from "axios";
@@ -44,6 +46,19 @@ const routes = [{
 // 路由：3、创建对象
 const router = new VueRouter({
     routes
+})
+
+// axios的统一拦截器，拦截响应
+axios.interceptors.response.use(res => {
+    var {
+        message,
+        statusCode
+    } = res.data;
+    if (statusCode === 401) {
+        Toast.fail(message)
+    }
+    // 必须要返回res
+    return res;
 })
 
 
