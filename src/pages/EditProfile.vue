@@ -5,6 +5,9 @@
 
     <div class="image">
       <img :src="profile.head_img" alt />
+
+      <!-- vant上传组件 -->
+      <van-uploader :after-read="afterRead" class="uploader" />
     </div>
 
     <div>
@@ -32,6 +35,56 @@ export default {
   components: {
     HeaderNormal,
     CellBar
+  },
+  //   事件函数
+  methods: {
+    // 选择图片之后的回调函数，file返回选中的图片
+    afterRead(file) {
+      // 构造表单数据
+      var formData = new FormData();
+
+      // 通过表单使用append方法追加数据
+      formData.append("file", file.file);
+
+      this.$axios({
+        url: "/upload",
+        method: "POST",
+
+        // 添加头信息
+        headers: {
+          Authorization: localStorage.getItem("token")
+        },
+        // 把表单数据上传到服务器
+        data: formData
+      }).then(res => {
+        var { data } = res.data;
+
+        // 替换用户资料的头像
+        this.profile.head_img = this.$axios.defaults.baseURL + data.url;
+
+        // 把头像url上传到用户资料
+        this.$axios({
+          url: "/user_update/" + localStorage.getItem("user_id"),
+          method: "POST",
+
+          // 添加头信息
+          headers: {
+            Authorization: localStorage.getItem("token")
+          },
+
+          data: {
+            head_img: data.url
+          }
+        }).then(res => {
+          var { message } = res.data;
+
+          // 成功的弹窗提示
+          if (message === "修改成功") {
+            this.$toast.success(message);
+          }
+        });
+      });
+    }
   },
   //   页面加载完触发
   mounted() {
@@ -73,11 +126,22 @@ export default {
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    position: relative;
     img {
       display: block;
       width: 100/360 * 100vw;
       height: 100/360 * 100vw;
       border-radius: 50%;
+    }
+    .uploader {
+      position: absolute;
+      opacity: 0;
+    }
+
+    // 如果要修改第三方组件库的样式时候，需要再前面加上/deep/,因为组件库的样式不受scoped的影响
+    /deep/ .van-uploader__upload {
+      width: 100/360 * 100vw;
+      height: 100/360 * 100vw;
     }
   }
 }
