@@ -13,6 +13,8 @@ import EditProfile from "@/pages/EditProfile";
 
 import UserFollow from "@/pages/UserFollow";
 
+import UserComment from "@/pages/UserComment";
+
 
 // 导入vant-UI组件
 import Vant from "vant";
@@ -63,6 +65,10 @@ const routes = [{
         path: "/user_follow",
         component: UserFollow
 
+    },
+    {
+        path: "/user_comment",
+        component: UserComment
     }
 ]
 
