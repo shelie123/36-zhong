@@ -7,7 +7,9 @@ import Login from "@/pages/Login";
 
 import Register from "@/pages/Register";
 
-import Personal from "@/pages/Personal"
+import Personal from "@/pages/Personal";
+
+import EditProfile from "@/pages/EditProfile";
 
 
 // 导入vant-UI组件
@@ -49,6 +51,10 @@ const routes = [{
     {
         path: "/personal",
         component: Personal
+    },
+    {
+        path: "/edit_profile",
+        component: EditProfile
     }
 ]
 
@@ -62,8 +68,8 @@ router.beforeEach((to, from, next) => {
     // 是否有token
     const hasToken = localStorage.getItem("token");
 
-    // 是否是个人中心
-    if (to.path === '/personal') {
+    // 是否是个人中心 判断是否需要登录权限的页面
+    if (to.path === '/personal' || to.path === "/edit_profile") {
         // 判断本地是否有token
         if (hasToken) {
             return next();
