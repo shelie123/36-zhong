@@ -120,7 +120,7 @@ export default {
   }
   // 视频显示布局
   .video-cart {
-    padding: 20px 10px;
+    padding: 15px 10px;
     border-bottom: 1px #ccc solid;
 
     .post-title {
