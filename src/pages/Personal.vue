@@ -15,19 +15,21 @@
           <span class="iconfont iconjiantou1"></span>
         </div>
       </div>
-      <!-- 调用条形组件 -->
-      <router-link to="/user_follow">
-        <CellBar label="我的关注" text="关注的用户" />
-      </router-link>
-
-      <router-link to="/user_comment">
-      <CellBar label="我的跟帖" text="跟帖/回复" />
-      </router-link>
-
-      <CellBar label="我的收藏" text="文章/视频" />
-      
-      <CellBar label="退出" @click="handleLogout" />
     </router-link>
+    <!-- 调用条形组件 -->
+    <router-link to="/user_follow">
+      <CellBar label="我的关注" text="关注的用户" />
+    </router-link>
+
+    <router-link to="/user_comment">
+      <CellBar label="我的跟帖" text="跟帖/回复" />
+    </router-link>
+
+    <CellBar label="我的收藏" text="文章/视频" />
+
+    <CellBar label="设置" />
+
+    <CellBar label="退出" @click="handleLogout" />
   </div>
 </template>
 

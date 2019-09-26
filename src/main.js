@@ -16,6 +16,10 @@ import UserFollow from "@/pages/UserFollow";
 import UserComment from "@/pages/UserComment";
 
 
+// 前端页面
+import Index from "@/pages/Index";
+
+
 // 导入vant-UI组件
 import Vant from "vant";
 
@@ -49,10 +53,6 @@ const routes = [{
         component: Register
     },
     {
-        path: "/",
-        component: Login
-    },
-    {
         path: "/personal",
         component: Personal
     },
@@ -69,6 +69,17 @@ const routes = [{
     {
         path: "/user_comment",
         component: UserComment
+    },
+
+
+    // 前端页面路由配置
+    {
+        path: "/",
+        component: Index
+    },
+    {
+        path: "/index",
+        component: Index
     }
 ]
 

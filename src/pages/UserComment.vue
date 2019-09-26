@@ -54,7 +54,7 @@ export default {
 
 <style scoped lang="less">
 .box {
-  position: fixed;
+  // position: fixed;
   width: 100%;
   height: 100%;
   background: #eee;
