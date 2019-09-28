@@ -16,9 +16,11 @@ import UserFollow from "@/pages/UserFollow";
 import UserComment from "@/pages/UserComment";
 
 
+
 // 前端页面
 import Index from "@/pages/Index";
 
+import PostDetail from "@/pages/PostDetail"
 
 // 导入vant-UI组件
 import Vant from "vant";
@@ -80,6 +82,10 @@ const routes = [{
     {
         path: "/index",
         component: Index
+    },
+    {
+        path: "/postdetail/:id",
+        component: PostDetail
     }
 ]
 
