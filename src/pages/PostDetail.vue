@@ -1,20 +1,44 @@
 <template>
   <div>
-    <div class="top">
-      <i class="iconfont iconjiantou2" @click="$router.back()"></i>
-      <div class="iconfont iconnew logo"></div>
-      <span class="focus guanzhu" v-if="!detail.has_follow" @click="handleFollow">关注</span>
-      <span class="focus focus_active" v-else @click="handleUnFollow">已关注</span>
+    <!-- 文章详情页的内容 -->
+    <div class="article" v-if="detail.type===1">
+      <div class="top">
+        <i class="iconfont iconjiantou2" @click="$router.back()"></i>
+        <div class="iconfont iconnew logo"></div>
+        <span class="focus guanzhu" v-if="!detail.has_follow" @click="handleFollow">关注</span>
+        <span class="focus focus_active" v-else @click="handleUnFollow">已关注</span>
+      </div>
+      <div class="head-title">
+        <h3>{{detail.title}}</h3>
+        <div class="head-foot">
+          <span>{{detail.user.nickname}}</span>
+          <em>2019-9-28</em>
+        </div>
+      </div>
+      <div class="content" v-html="detail.content"></div>
     </div>
-    <div class="head-title">
-      <h3>{{detail.title}}</h3>
-      <div class="head-foot">
-        <span>{{detail.user.nickname}}</span>
-        <em>2019-9-28</em>
+
+    <!-- 视频详情页的内容 -->
+    <div class="video-wrap" v-if="detail.type===2">
+      <video
+        src="https://video.pearvideo.com/mp4/adshort/20190927/cont-1607446-14434032_adpkg-ad_hd.mp4"
+        class="video"
+        controls
+        poster="https://timgmb04.bdimg.com/timg?searchbox_feed&quality=100&wh_rate=0&size=b576_324&ref=http%3A%2F%2Fwww.baidu.com&sec=1568739067&di=612dd27cae470b93b01a4b32ef72fbac&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fe18c6ffa079441431f8988ca4c3ac106.jpeg"
+      ></video>
+      <div class="video-top">
+        <div class="video-head">
+          <img :src="$axios.defaults.baseURL+detail.user.head_img" alt />
+          <p>{{detail.user.nickname}}</p>
+          <div class="concern">
+            <span class="focus guanzhu" v-if="!detail.has_follow" @click="handleFollow">关注</span>
+            <span class="focus focus_active" v-else @click="handleUnFollow">已关注</span>
+          </div>
+        </div>
+        <div class="video-content">火星时报火星时报火星时报火星时报火星时报火星时报</div>
       </div>
     </div>
 
-    <div class="content" v-html="detail.content"></div>
     <div class="footed">
       <div class="footed-left">
         <!-- 点赞 -->
@@ -24,7 +48,8 @@
         </span>
       </div>
       <div class="footed-right">
-        <i class="iconfont iconweixin"></i>微信
+        <i class="iconfont iconweixin"></i>
+        <a href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1">微信</a>
       </div>
     </div>
 
@@ -250,6 +275,57 @@ export default {
   .like_active {
     .icondianzan {
       color: red;
+    }
+  }
+}
+.video-wrap {
+  .video {
+    width: 100%;
+  }
+  .video-top {
+    .video-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+
+      img {
+        width: 30/360 * 100vw;
+        height: 30/360 * 100vw;
+        border-radius: 50%;
+      }
+      p {
+        display: block;
+        font-size: 14px;
+        flex: 1;
+        padding-left: 10px;
+      }
+      .concern {
+        padding: 0 10px;
+        .guanzhu {
+          width: 40/360 * 100vw;
+          text-align: center;
+          font-size: 12px;
+          border: 1px red solid;
+          padding: 5px 12px;
+          border-radius: 50px;
+          color: #fff;
+          background: red;
+        }
+        .focus_active {
+          width: 100/360 * 100vw;
+          font-size: 12px;
+          text-align: center;
+          border: 1px #666 solid;
+          padding: 5px 12px;
+          border-radius: 50px;
+          color: #666;
+        }
+      }
+    }
+    .video-content {
+      padding: 10px;
+      font-size: 14px;
     }
   }
 }
