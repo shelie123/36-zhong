@@ -41,22 +41,22 @@ import PostCard from "@/components/PostCard";
 export default {
   data() {
     return {
-      active: 1,
+      // active: 1,
       //   当前默认的栏目，没有登录应该是0，登录为1，最终的效果为默认显示头条
       active: localStorage.getItem("token") ? 1 : 0,
       categories: [],
 
       //   默认的头条文章列表
-      posts: [],
+      // posts: [],
 
       //   栏目id
       cid: 999,
 
       // 是否在加载，加载完毕后需要手动变为false
-      loading: false,
+      // loading: false,
 
       // 是否有更多数据，如果加载完所有的数据,改为true
-      finished: false,
+      // finished: false,
 
       // 分页的变量
       pageIndex: 1,
@@ -152,22 +152,22 @@ export default {
       this.categories = newData;
 
       console.log(this.categories);
-    });
 
-    // 请求文章列表
-    // 必须要先等待栏目请求完毕，再请求文章列表
-    this.$axios({
-      url: `/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
-    }).then(res => {
-      var { data } = res.data;
+      // 请求文章列表
+      // 必须要先等待栏目请求完毕，再请求文章列表
+      this.$axios({
+        url: `/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
+      }).then(res => {
+        var { data } = res.data;
 
-      // 默认赋值给头条的列表
-      // this.posts = data;
-      this.categories[this.active].posts = data;
+        // 默认赋值给头条的列表
+        // this.posts = data;
+        this.categories[this.active].posts = data;
 
-      // 页面加一
-      // this.pageIndex++;
-      this.categories[this.active].pageIndex++;
+        // 页面加一
+        // this.pageIndex++;
+        this.categories[this.active].pageIndex++;
+      });
     });
   }
 };
