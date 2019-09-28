@@ -7,11 +7,15 @@
       </div>
       <div class="footed-right">
         <span class="comment">
-          <em class="pinglun">1020</em>
+          <em class="pinglun">{{post.comment_length}}</em>
           <i class="iconfont iconpinglun-"></i>
         </span>
-
-        <i class="iconfont iconshoucang"></i>
+        <!-- 收藏 -->
+        <i
+          class="iconfont iconshoucang"
+          :class="{star_active: post.has_star}"
+          @click="$emit('handleStar')"
+        ></i>
         <i class="iconfont iconfenxiang"></i>
       </div>
     </div>
@@ -40,6 +44,8 @@ export default {
       isFocus: false
     };
   },
+  // 接收文章的详情
+  props: ["post"],
   methods: {
     // 获得焦点的时候触发
     handleFocus() {
@@ -54,7 +60,7 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
-  padding:10px 0;
+  padding: 10px 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -98,13 +104,16 @@ export default {
       font-size: 24px;
       padding: 0 10px;
     }
+    .star_active {
+      color: red;
+    }
   }
 }
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  padding:10px 0;
+  padding: 10px 0;
   background: #fff;
   display: flex;
   justify-content: space-between;

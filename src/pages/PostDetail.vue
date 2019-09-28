@@ -17,7 +17,11 @@
     <div class="content" v-html="detail.content"></div>
     <div class="footed">
       <div class="footed-left">
-        <i class="iconfont icondianzan"></i>112
+        <!-- 点赞 -->
+        <span @click="handleLike" :class="{like_active:detail.has_like}">
+          <i class="iconfont icondianzan"></i>
+          {{detail.like_length}}
+        </span>
       </div>
       <div class="footed-right">
         <i class="iconfont iconweixin"></i>微信
@@ -25,7 +29,7 @@
     </div>
 
     <div class="footed">
-      <PostFooter />
+      <PostFooter :post="detail" @handleStar="handleStar" />
     </div>
   </div>
 </template>
@@ -86,6 +90,56 @@ export default {
           this.detail.has_follow = false;
           this.$toast.success(message);
         }
+      });
+    },
+    // 点赞
+    handleLike() {
+      // 通过作者id点赞用户
+      this.$axios({
+        url: "/post_like/" + this.detail.id,
+        // 添加头信息
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        console.log(res.data);
+        var { message } = res.data;
+
+        if (message === "点赞成功") {
+          // 修改关注的按钮状态
+          this.detail.has_like = true;
+          this.detail.like_length++;
+        }
+        if (message === "取消成功") {
+          // 修改关注的按钮状态
+          this.detail.has_like = false;
+          this.detail.like_length--;
+        }
+        this.$toast.success(message);
+      });
+    },
+    // 收藏
+    handleStar() {
+      // 通过作者id点赞用户
+      this.$axios({
+        url: "/post_star/" + this.detail.id,
+        // 添加头信息
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        console.log(res.data);
+        var { message } = res.data;
+
+        if (message === "收藏成功") {
+          // 修改关注的按钮状态
+          this.detail.has_like = true;
+        }
+        if (message === "取消成功") {
+          // 修改关注的按钮状态
+          this.detail.has_like = false;
+        }
+        this.$toast.success(message);
       });
     }
   },
@@ -183,9 +237,6 @@ export default {
     border: 1px #999 solid;
     padding: 5px 13px;
     border-radius: 50px;
-    .icondianzan {
-      padding-right: 5px;
-    }
   }
   .footed-right {
     border: 1px #999 solid;
@@ -194,6 +245,11 @@ export default {
     .iconweixin {
       color: #81d842;
       padding-right: 5px;
+    }
+  }
+  .like_active {
+    .icondianzan {
+      color: red;
     }
   }
 }
