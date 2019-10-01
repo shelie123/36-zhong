@@ -6,7 +6,8 @@
         <input type="text" placeholder="写跟帖" @focus="handleFocus" />
       </div>
       <div class="footed-right">
-        <span class="comment">
+        <!-- 用事件的方式跳转并且带上参数 -->
+        <span class="comment" @click="$router.push(`/postcomment/${post.id}`)">
           <em class="pinglun">{{post.comment_length}}</em>
           <i class="iconfont iconpinglun-"></i>
         </span>
@@ -25,13 +26,14 @@
       <div class="footed-left">
         <textarea
           rows="3"
-          placeholder="回复:"
+          :placeholder="placeholder"
+          v-model="value"
           ref="textarea"
-          @blur="isFocus=false"
+          @blur="handleBlur"
           :autofocus="isFocus"
         ></textarea>
       </div>
-      <div class="send">发送</div>
+      <div class="send" @click="handleSubmit">发送</div>
     </div>
   </div>
 </template>
@@ -41,15 +43,88 @@ export default {
   data() {
     return {
       // 输入框是否获得焦点
-      isFocus: false
+      isFocus: false,
+
+      // 评论的内容
+      value: "",
+
+      // 输入框的提示文字
+      placeholder: "写跟帖"
     };
   },
   // 接收文章的详情
-  props: ["post"],
+  // replyComment 要回复的评论
+  props: ["post", "replyComment"],
+
+  // 监听事件
+  watch: {
+    replyComment() {
+      // 评论回复有值的时候才显示@的用户名
+      if (this.replyComment) {
+        this.isFocus = true;
+        this.placeholder = "@" + this.replyComment.user.nickname;
+      }
+    }
+  },
   methods: {
     // 获得焦点的时候触发
     handleFocus() {
       this.isFocus = true;
+    },
+
+    // 输入框失去焦点时候触发
+    handleBlur() {
+      if (!this.value) {
+        this.isFocus = false;
+
+        // 如果有回复的评论，清空回复的评论
+        if (this.replyComment) {
+          this.$emit("handleReply", null);
+          this.placeholder = "写跟帖";
+        }
+      }
+    },
+
+    // 发布评论
+    handleSubmit() {
+      if (!this.value) {
+        return;
+      }
+      // 评论的参数
+      var data = {
+        content: this.value
+      };
+
+      // 如果有回复的评论，加上parent_id
+      if (this.replyComment) {
+        data.parent_id = this.replyComment.id;
+      }
+
+      this.$axios({
+        url: "/post_comment/" + this.post.id,
+        method: "POST",
+        // 添加头信息
+        headers: {
+          Authorization: localStorage.getItem("token")
+        },
+        data
+      }).then(res => {
+        var { message } = res.data;
+
+        if (message === "评论发布成功") {
+          // 触发父组件方法更新评论的列表
+          this.$emit("getComments", this.post.id, "isReply");
+
+          // 隐藏输入框
+          this.isFocus = false;
+
+          // 清空输入框的值
+          this.value = "";
+
+          // 滚动到底部
+          window.scrollTo(0, 0);
+        }
+      });
     }
   }
 };
@@ -102,7 +177,7 @@ export default {
     }
     i {
       font-size: 24px;
-      padding: 0 10px;
+      padding: 0 8px;
     }
     .star_active {
       color: red;

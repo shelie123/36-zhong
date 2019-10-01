@@ -131,12 +131,12 @@ export default {
         var { message } = res.data;
 
         if (message === "点赞成功") {
-          // 修改关注的按钮状态
+          // 修改点赞的按钮状态
           this.detail.has_like = true;
           this.detail.like_length++;
         }
         if (message === "取消成功") {
-          // 修改关注的按钮状态
+          // 修改点赞的按钮状态
           this.detail.has_like = false;
           this.detail.like_length--;
         }
@@ -145,7 +145,7 @@ export default {
     },
     // 收藏
     handleStar() {
-      // 通过作者id点赞用户
+      // 通过作者id收藏用户
       this.$axios({
         url: "/post_star/" + this.detail.id,
         // 添加头信息
@@ -157,12 +157,12 @@ export default {
         var { message } = res.data;
 
         if (message === "收藏成功") {
-          // 修改关注的按钮状态
-          this.detail.has_like = true;
+          // 修改收藏的按钮状态
+          this.detail.has_star = true;
         }
         if (message === "取消成功") {
-          // 修改关注的按钮状态
-          this.detail.has_like = false;
+          // 修改收藏的按钮状态
+          this.detail.has_star = false;
         }
         this.$toast.success(message);
       });
@@ -207,25 +207,6 @@ export default {
     flex: 1;
     font-size: 50/360 * 100vw;
     padding-left: 10px;
-  }
-  .guanzhu {
-    width: 40/360 * 100vw;
-    text-align: center;
-    font-size: 12px;
-    border: 1px red solid;
-    padding: 5px 12px;
-    border-radius: 50px;
-    color: #fff;
-    background: red;
-  }
-  .focus_active {
-    width: 40/360 * 100vw;
-    font-size: 12px;
-    text-align: center;
-    border: 1px #666 solid;
-    padding: 5px 12px;
-    border-radius: 50px;
-    color: #666;
   }
 }
 .head-title {
@@ -294,33 +275,12 @@ export default {
         height: 30/360 * 100vw;
         border-radius: 50%;
       }
+
       p {
         display: block;
         font-size: 14px;
         flex: 1;
         padding-left: 10px;
-      }
-      .concern {
-        padding: 0 10px;
-        .guanzhu {
-          width: 40/360 * 100vw;
-          text-align: center;
-          font-size: 12px;
-          border: 1px red solid;
-          padding: 5px 12px;
-          border-radius: 50px;
-          color: #fff;
-          background: red;
-        }
-        .focus_active {
-          width: 100/360 * 100vw;
-          font-size: 12px;
-          text-align: center;
-          border: 1px #666 solid;
-          padding: 5px 12px;
-          border-radius: 50px;
-          color: #666;
-        }
       }
     }
     .video-content {
@@ -328,5 +288,26 @@ export default {
       font-size: 14px;
     }
   }
+}
+.guanzhu {
+  display: block;
+  width: 40/360 * 100vw;
+  text-align: center;
+  font-size: 12px;
+  border: 1px red solid;
+  padding: 5px 12px;
+  border-radius: 50px;
+  color: #fff;
+  background: red;
+}
+.focus_active {
+  display: block;
+  width: 40/360 * 100vw;
+  font-size: 12px;
+  text-align: center;
+  border: 1px #666 solid;
+  padding: 5px 12px;
+  border-radius: 50px;
+  color: #666;
 }
 </style>

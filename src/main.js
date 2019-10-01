@@ -20,7 +20,9 @@ import UserComment from "@/pages/UserComment";
 // 前端页面
 import Index from "@/pages/Index";
 
-import PostDetail from "@/pages/PostDetail"
+import PostDetail from "@/pages/PostDetail";
+
+import PostComment from "@/pages/comment/Comment.vue";
 
 // 导入vant-UI组件
 import Vant from "vant";
@@ -86,6 +88,11 @@ const routes = [{
     {
         path: "/postdetail/:id",
         component: PostDetail
+    }, {
+
+        path: "/postcomment/:id",
+        component: PostComment
+
     }
 ]
 
