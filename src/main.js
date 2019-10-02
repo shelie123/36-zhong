@@ -24,6 +24,8 @@ import PostDetail from "@/pages/PostDetail";
 
 import PostComment from "@/pages/comment/Comment.vue";
 
+import Search from "@/pages/Search";
+
 // 导入vant-UI组件
 import Vant from "vant";
 
@@ -93,6 +95,10 @@ const routes = [{
         path: "/postcomment/:id",
         component: PostComment
 
+    },
+    {
+        path: "/search",
+        component: Search
     }
 ]
 

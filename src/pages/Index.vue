@@ -2,10 +2,12 @@
   <div class="box">
     <div class="top">
       <span class="iconfont iconnew logo"></span>
-      <div class="top-center">
-        <span class="iconfont iconsearch"></span>
-        <i>搜索新闻</i>
-      </div>
+      <router-link to="/search" class="top-search">
+        <div class="top-center">
+          <span class="iconfont iconsearch"></span>
+          <i>搜索新闻</i>
+        </div>
+      </router-link>
       <router-link to="/Personal">
         <span class="iconfont iconwode user"></span>
       </router-link>
@@ -197,20 +199,22 @@ export default {
     padding: 10px;
     color: #fff;
   }
+  .top-search {
+    width: 100%;
+    .top-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      box-sizing: border-box;
+      background: #f97979;
+      padding: 5px 10px;
+      border-radius: 50px;
 
-  .top-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    box-sizing: border-box;
-    background: #f97979;
-    padding: 5px 10px;
-    border-radius: 50px;
-
-    i {
-      padding-left: 10px;
+      i {
+        padding-left: 10px;
+      }
     }
   }
 
