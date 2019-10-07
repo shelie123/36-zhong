@@ -24,7 +24,7 @@ export default {
   methods: {
     handleReply() {
       this.$emit("handleReply", this.data);
-    //   console.log(this.data);
+      //   console.log(this.data);
     }
   }
 };
@@ -34,7 +34,7 @@ export default {
 .addition {
   box-sizing: border-box;
   padding: 10px 10px;
-  margin: 10px;
+  margin: 0 10px;
   border: 1px #eee solid;
 
   .remark {
@@ -59,5 +59,8 @@ export default {
   .addition-bottom {
     padding: 10px 10px;
   }
+}
+.addition:not(:first-child) {
+  border-top: none;
 }
 </style>

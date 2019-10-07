@@ -22,6 +22,7 @@
 import PostCard from "@/components/PostCard";
 
 export default {
+  name: "search", //可以命名为任意字符串
   data() {
     return {
       // 搜索的关键字
@@ -52,6 +53,21 @@ export default {
         console.log(this.list);
       });
     }
+  },
+  // 组件内的路由守卫，判断如果是首页进入到搜索页的，清空页面的缓存数据
+  beforeRouteEnter(to, from, next) {
+    console.log(from);
+    // 在渲染该组件的对应路由被 confirm 前调用,不！能！获取组件实例 `this`, 因为当守卫执行前，组件实例还没被创建
+
+    //  如果from.path的值等于斜杠,最好转译一下\
+    if (from.path === "/") {
+      next(vm => {
+        // 通过 `vm` 访问组件实例,vm 其实就是this
+        vm.keyword = "";
+        vm.list = [];
+      });
+    }
+    next();
   }
 };
 </script>
