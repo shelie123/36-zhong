@@ -28,9 +28,21 @@
             :immediate-check="false"
           >
             <!-- 文章模块组件，post是单篇文章详情 -->
-            <PostCard v-for="(item,index) in item.posts" :key="index" :post="item" />
+            <PostCard
+              v-for="(item,index) in item.posts"
+              :key="index"
+              :post="item"
+              v-if="item.open==1"
+            />
           </van-list>
-          <van-loading v-if="item.posts.length==0 && !item.finished" size="24px" style="margin-top:20px" vertical type="spinner" color="#1989fa">加载中...</van-loading>
+          <van-loading
+            v-if="item.posts.length==0 && !item.finished"
+            size="24px"
+            style="margin-top:20px"
+            vertical
+            type="spinner"
+            color="#1989fa"
+          >加载中...</van-loading>
         </van-tab>
       </van-tabs>
     </div>
@@ -49,7 +61,6 @@ export default {
       //   当前默认的栏目，没有登录应该是0，登录为1，最终的效果为默认显示头条
       active: localStorage.getItem("token") ? 1 : 0,
       categories: [],
-
       //   默认的头条文章列表
       // posts: [],
 
@@ -92,13 +103,13 @@ export default {
     // 加载下一页的数据
     onLoad() {
       setTimeout(() => {
-        console.log("已经滚动到底部");
+        
 
         // this.loading = false;
         // this.finished = true;
 
         var category = this.categories[this.active];
-        console.log(category);
+       
 
         // 请求文章列表
         this.$axios({
@@ -155,7 +166,7 @@ export default {
       // 保存栏目列表
       this.categories = newData;
 
-      console.log(this.categories);
+     
 
       // 请求文章列表
       // 必须要先等待栏目请求完毕，再请求文章列表

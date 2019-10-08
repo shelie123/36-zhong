@@ -127,7 +127,7 @@ export default {
           Authorization: localStorage.getItem("token")
         }
       }).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         var { message } = res.data;
 
         if (message === "点赞成功") {
@@ -153,7 +153,7 @@ export default {
           Authorization: localStorage.getItem("token")
         }
       }).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         var { message } = res.data;
 
         if (message === "收藏成功") {
@@ -187,7 +187,7 @@ export default {
     }
 
     this.$axios(config).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       var { data } = res.data;
       //   保存到详情
       this.detail = data;

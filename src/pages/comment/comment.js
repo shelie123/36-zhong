@@ -68,7 +68,7 @@ export default {
 
         // 点击回复按钮时候触发的方法
         handleReply(item) {
-            console.log(item)
+            
             // 获取当前要回复的id
             this.replyComment = item;
         },
